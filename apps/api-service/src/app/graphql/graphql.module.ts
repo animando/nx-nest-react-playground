@@ -17,5 +17,6 @@ import { TransactionsModule } from './transactions/transactions.module';
     TransactionsModule,
   ],
   providers: [],
+  exports: [],
 })
 export class GraphQLModule {}

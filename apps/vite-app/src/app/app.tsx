@@ -11,15 +11,6 @@ export function App() {
         </p>
         <p>Close duplicate browser tabs and reload this page to continue</p>
       </MultipleTabsCheck>
-      <div role="navigation">
-        <ul className="flex flex-row">
-          {routes.map(({ path, title }) => (
-            <li key={path} className="mr-2">
-              <Link to={path}>{title}</Link>
-            </li>
-          ))}
-        </ul>
-      </div>
       <Routes>
         {routes.map(({ path, component: Component }) => (
           <Route key={path} path={path} Component={Component} />

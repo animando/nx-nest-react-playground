@@ -1,0 +1,9 @@
+{
+  "name": "clerk-auth",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/clerk-auth/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project clerk-auth --web",
+  "targets": {}
+}

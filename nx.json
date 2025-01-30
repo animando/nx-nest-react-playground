@@ -64,6 +64,7 @@
         "buildTargetName": "build",
         "testTargetName": "test",
         "serveTargetName": "serve",
+        "devTargetName": "dev",
         "previewTargetName": "preview",
         "serveStaticTargetName": "serve-static",
         "typecheckTargetName": "typecheck"

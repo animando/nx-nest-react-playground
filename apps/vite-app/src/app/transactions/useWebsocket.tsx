@@ -2,13 +2,10 @@
 import { io, type Socket } from 'socket.io-client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useToken } from '../../lib/useToken';
 
 const wsServerUrl =
   import.meta.env['VITE_WS_SERVER_URL'] || 'http://localhost:12222';
-
-const initSocket = () => {
-  return io(wsServerUrl, { autoConnect: false });
-};
 
 export type Handler = (value: unknown) => void;
 type HandlerMap = Record<string, Handler>;
@@ -23,6 +20,7 @@ export const useWebsocket = ({
   const socketRef = useRef<Socket | null>(null);
   const [socket, setSocket] = useState<Socket>();
   const [connected, setConnected] = useState<boolean>(false);
+  const token = useToken();
 
   const onConnect = useCallback(() => {
     setConnected(true);
@@ -36,11 +34,21 @@ export const useWebsocket = ({
     setConnected(false);
   }, [onConnect]);
 
+  const initSocket = useCallback((token: string) => {
+    console.log('init with token', token);
+    return io(wsServerUrl, {
+      autoConnect: false,
+      extraHeaders: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }, []);
+
   useEffect(() => {
-    if (socketRef.current) {
+    if (socketRef.current || !token) {
       return;
     }
-    socketRef.current = initSocket();
+    socketRef.current = initSocket(token);
     const socket = socketRef.current;
     if (socket) {
       setSocket(socket);
@@ -54,7 +62,7 @@ export const useWebsocket = ({
         socketRef.current = null;
       }
     };
-  }, [onConnect, onDisconnect]);
+  }, [onConnect, onDisconnect, token]);
 
   useEffect(() => {
     if (!socket || !connected) {

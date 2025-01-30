@@ -7,6 +7,7 @@ import {
 } from './generated/transactions';
 import { useQuery } from 'urql';
 import { type UITransaction } from '@animando/ui-components';
+import { useToken } from '../../lib/useToken';
 
 type AddTransactions = (...t: UITransaction[]) => void;
 
@@ -16,6 +17,7 @@ const useTransactionsQuery = (
   addTransactions: AddTransactions
 ): { loadMore: LoadMore; hasMore: boolean; isLoading: boolean } => {
   const initialLoadDone = useRef<boolean>(false);
+  const token = useToken();
   const [nextToken, setNextToken] = useState<string | null>(null);
   const [nextTokenToUse, setNextTokenToUse] = useState<string | null>(null);
   const [{ data, fetching }, revalidate] = useQuery<LatestTransactionsQuery>({
@@ -35,14 +37,19 @@ const useTransactionsQuery = (
   }, [data, addTransactions]);
 
   useEffect(() => {
-    if (!initialLoadDone.current) {
-      revalidate();
+    if (token && !initialLoadDone.current) {
+      revalidate({
+        fetchOptions: {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      });
       initialLoadDone.current = true;
     }
-  }, [revalidate]);
+  }, [revalidate, token]);
 
   const loadMore = useCallback<LoadMore>(() => {
-    console.log('load more');
     setNextTokenToUse(nextToken);
     initialLoadDone.current = false;
   }, [nextToken]);

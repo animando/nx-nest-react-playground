@@ -51,3 +51,4 @@ out
 # Sensitive
 passwords
 vite.config.*.timestamp*
+.env.local

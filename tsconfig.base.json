@@ -25,7 +25,8 @@
       "@animando/redis": ["infra/redis/src/index.ts"],
       "@animando/transaction": ["libs/transaction/src/index.ts"],
       "@animando/ui-components": ["libs/ui-components/src/index.ts"],
-      "@animando/utils": ["libs/utils/src/index.ts"]
+      "@animando/utils": ["libs/utils/src/index.ts"],
+      "@animando/clerk-auth": ["libs/clerk-auth/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -1,0 +1,11 @@
+generates:
+  'apps/vite-app/src/app/transactions/generated/transactions.ts':
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-urql'
+    documents: 'apps/vite-app/src/app/transactions/transactions.graphql'
+    schema: 'apps/api-service/src/app/graphql/transactions/transactions.graphql'
+    config:
+      withComponent: false
+      withHooks: false
