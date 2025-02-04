@@ -10,7 +10,7 @@ import {
 } from '@nestjs/websockets';
 import { logger } from '@animando/logger';
 import { Server, Socket } from 'socket.io';
-import { validateToken } from '../../../../../libs/clerk-auth/src';
+import { validateToken } from '@animando/clerk-auth';
 
 const wsPort = Number(process.env['WEBSOCKET_PORT'] || '22201');
 
